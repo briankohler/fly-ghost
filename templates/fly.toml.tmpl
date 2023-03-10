@@ -1,0 +1,50 @@
+app = "${app_name}"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+primary_region = "${primary_region}"
+
+[env]
+  LITESTREAM_ACCESS_KEY_ID = "${access_key}"
+  REPLICA_URL = "s3://${bucket_name}.${bucket_region}.s3.wasabisys.com"
+  url = "https://${domain}"
+  port=2368
+  database__client = "sqlite3"
+  database__connection__filename = "content/data/ghost.db"
+  database__useNullAsDefault = "true"
+  database__debug = "false"
+
+[mounts]
+  source="data"
+  destination="/var/lib/ghost/content"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 2368
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
