@@ -1,6 +1,6 @@
 #!/bin/bash
 set +e
-flyctl secrets set LITESTREAM_SECRET_ACCESS_KEY=$(terraform output -raw accesskeysecret)
+flyctl secrets set AWS_SECRET_ACCESS_KEY=$(terraform output -raw accesskeysecret) LITESTREAM_SECRET_ACCESS_KEY=$(terraform output -raw accesskeysecret)
 set -e
 flyctl deploy --json --force-machines --auto-confirm --verbose
 set +e

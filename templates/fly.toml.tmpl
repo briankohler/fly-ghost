@@ -6,13 +6,17 @@ primary_region = "${primary_region}"
 
 [env]
   LITESTREAM_ACCESS_KEY_ID = "${access_key}"
-  REPLICA_URL = "s3://${bucket_name}.${bucket_region}.s3.wasabisys.com"
   url = "https://${domain}"
   port=2368
   database__client = "sqlite3"
   database__connection__filename = "content/data/ghost.db"
   database__useNullAsDefault = "true"
   database__debug = "false"
+  AWS_ACCESS_KEY_ID = "${access_key}"
+  AWS_DEFAULT_REGION = "${bucket_region}
+  GHOST_STORAGE_ADAPTER_S3_PATH_BUCKET = "${bucket}"
+  GHOST_STORAGE_ADAPTER_S3_PATH_PREFIX = "images"
+  GHOST_STORAGE_ADAPTER_S3_ENDPOINT = "https://s3.wasabisys.com"
 
 [mounts]
   source="data"
